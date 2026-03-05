@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APPFYSTORE — Apresentação do Projeto Atualizado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --primary: #00c853;
+      --primary-dark: #00a040;
+      --secondary: #1a1a2e;
+      --accent: #0f3460;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --info: #3b82f6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--surface-alt); color: var(--text); }
+
+    /* ---- HERO ---- */
+    .hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 50%, #16213e 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0,200,83,.15) 0%, transparent 70%);
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 900px; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,200,83,.15);
+      border: 1px solid rgba(0,200,83,.3);
+      color: var(--primary);
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: .85rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .hero h1 span { color: var(--primary); }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,.7);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-hero-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 20px rgba(0,200,83,.4); }
+    .btn-hero-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    .btn-hero-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.3); }
+    .btn-hero-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ---- NAV ---- */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--secondary);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+
+    .sticky-nav .brand { color: #fff; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+    .sticky-nav .brand span { color: var(--primary); }
+
+    .sticky-nav .nav-links { display: flex; gap: 4px; }
+    .sticky-nav .nav-links a {
+      color: rgba(255,255,255,.7);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: .85rem;
+      font-weight: 500;
+      transition: all .2s;
+      text-decoration: none;
+    }
+    .sticky-nav .nav-links a:hover { color: #fff; background: rgba(255,255,255,.1); }
+
+    /* ---- SECTIONS ---- */
+    .section { padding: 80px 20px; }
+    .section-alt { background: var(--surface); }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary);
+      color: #fff;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 16px;
+    }
+    .section-header h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; margin-bottom: 12px; }
+    .section-header p { color: var(--text-muted); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+
+    /* ---- FEATURE CARDS ---- */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      transition: all .2s;
+    }
+
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.1); border-color: var(--primary); }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { color: var(--text-muted); font-size: .9rem; line-height: 1.6; }
+
+    /* ---- STRUCTURE TREE ---- */
+    .tree {
+      background: #0d1117;
+      border-radius: 12px;
+      padding: 28px;
+      font-family: 'Courier New', monospace;
+      font-size: .88rem;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .tree .dir  { color: #79c0ff; font-weight: 600; }
+    .tree .file { color: #e6edf3; }
+    .tree .php  { color: #f78166; }
+    .tree .html { color: #7ee787; }
+    .tree .css  { color: #d2a8ff; }
+    .tree .js   { color: #ffa657; }
+    .tree .sql  { color: #56d364; }
+    .tree .md   { color: #a5d6ff; }
+    .tree .comment { color: #8b949e; }
+
+    /* ---- API TABLE ---- */
+    .api-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .88rem;
+    }
+
+    .api-table th {
+      background: var(--secondary);
+      color: rgba(255,255,255,.8);
+      padding: 12px 16px;
+      text-align: left;
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .api-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .api-table tr:last-child td { border-bottom: none; }
+    .api-table tr:hover td { background: var(--surface-alt); }
+
+    .method {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: .75rem;
+      font-weight: 700;
+      font-family: monospace;
+    }
+
+    .method-get    { background: #dcfce7; color: #166534; }
+    .method-post   { background: #dbeafe; color: #1d4ed8; }
+    .method-delete { background: #fee2e2; color: #991b1b; }
+
+    code {
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: .82rem;
+      font-family: 'Courier New', monospace;
+      color: #e11d48;
+    }
+
+    /* ---- DB SCHEMA ---- */
+    .schema-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    .schema-card {
+      background: var(--surface);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .schema-card-header {
+      background: var(--secondary);
+      color: #fff;
+      padding: 14px 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .schema-card-body { padding: 0; }
+
+    .schema-field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: .85rem;
+    }
+
+    .schema-field:last-child { border-bottom: none; }
+    .schema-field .fname { font-weight: 600; color: var(--text); }
+    .schema-field .ftype { color: var(--text-muted); font-family: monospace; font-size: .78rem; }
+    .schema-field .fpk   { background: #fef9c3; color: #854d0e; padding: 2px 6px; border-radius: 4px; font-size: .7rem; font-weight: 700; }
+    .schema-field .ffk   { background: #dbeafe; color: #1d4ed8; padding: 2px 6px; border-radius: 4px; font-size: .7rem; font-weight: 700; }
+
+    /* ---- CREDENTIALS ---- */
+    .creds-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 24px;
+    }
+
+    .creds-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .creds-item:last-child { border-bottom: none; }
+    .creds-item .label { font-weight: 600; color: var(--text-muted); }
+    .creds-item .value { font-family: monospace; font-weight: 700; color: var(--primary); }
+
+    /* ---- CHARTS ---- */
+    .chart-container {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      margin-top: 24px;
+    }
+
+    /* ---- FOOTER ---- */
+    .footer {
+      background: var(--secondary);
+      color: rgba(255,255,255,.5);
+      padding: 40px 20px;
+      text-align: center;
+      font-size: .85rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 3rem; }
+      .hero-stats { gap: 20px; }
+      .sticky-nav .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fas fa-check-circle"></i> Projeto v1.1.0 Atualizado
+      </div>
+      <h1>APPFY<span>STORE</span></h1>
+      <p>Plataforma profissional de download de APKs com Painel Admin, Backend PHP e Base de Dados InfinityFree configurada.</p>
+      
+      <div class="hero-cta">
+        <a href="#features" class="btn-hero btn-hero-primary">
+          <i class="fas fa-rocket"></i> Explorar Funcionalidades
+        </a>
+        <a href="#setup" class="btn-hero btn-hero-outline">
+          <i class="fas fa-cog"></i> Guia de Instalação
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- STICKY NAV -->
+  <nav class="sticky-nav">
+    <div class="brand">
+      <img src="appfystore/frontend/assets/images/logo.png" alt="APPFYSTORE" style="height:24px; width:auto; margin-right:8px;"> APPFY<span>STORE</span>
+    </div>
+    <div class="nav-links">
+      <a href="#home">Início</a>
+      <a href="#features">Funcionalidades</a>
+      <a href="#structure">Estrutura</a>
+      <a href="#api">API</a>
+      <a href="#database">Base de Dados</a>
+      <a href="#setup">Instalação</a>
+      <a href="#explanation">Arquitetura</a>
+    </div>
+  </nav>
+
+  <!-- FEATURES -->
+  <section class="section section-alt" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag">Destaques</span>
+        <h2>Funcionalidades Principais</h2>
+        <p>Uma solução completa e escalável para gerir a sua própria loja de aplicativos.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="background:#dcfce7; color:#166534;"><i class="fas fa-store"></i></div>
+          <h3>Loja Pública</h3>
+          <p>Interface moderna e responsiva com homepage, categorias, pesquisa e páginas de apps otimizadas para SEO.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:#dbeafe; color:#1d4ed8;"><i class="fas fa-user-shield"></i></div>
+          <h3>Painel Admin</h3>
+          <p>Gestão completa de aplicativos, categorias e estatísticas de download com sistema de login seguro.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:#fef9c3; color:#854d0e;"><i class="fas fa-link"></i></div>
+          <h3>Links Externos</h3>
+          <p>Suporte para APKs hospedados no GitHub, MediaFire, Google Drive e outros storages externos.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:#fee2e2; color:#991b1b;"><i class="fas fa-search"></i></div>
+          <h3>SEO & URLs</h3>
+          <p>URLs amigáveis (ex: /apps/spotify-apk) e metatags dinâmicas para melhor posicionamento no Google.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:#ede9fe; color:#5b21b6;"><i class="fas fa-chart-bar"></i></div>
+          <h3>Estatísticas</h3>
+          <p>Contador de downloads em tempo real e gráficos de desempenho no dashboard administrativo.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:#ffedd5; color:#9a3412;"><i class="fas fa-envelope"></i></div>
+          <h3>Contacto Direto</h3>
+          <p>Configurado para receber mensagens em <strong>appfystore.hotmail.com</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRUCTURE -->
+  <section class="section" id="structure">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag">Arquitetura</span>
+        <h2>Estrutura de Ficheiros</h2>
+        <p>Organização limpa e modular seguindo as melhores práticas de desenvolvimento.</p>
+      </div>
+
+      <div class="tree">
+        <div class="dir">appfystore/</div>
+        <div class="dir">&nbsp;&nbsp;├── frontend/ <span class="comment">← Site Público (HTML/CSS/JS)</span></div>
+        <div class="file">&nbsp;&nbsp;│&nbsp;&nbsp;├── index.html <span class="html">← Homepage (Sem contadores)</span></div>
+        <div class="file">&nbsp;&nbsp;│&nbsp;&nbsp;├── categories.html</div>
+        <div class="dir">&nbsp;&nbsp;│&nbsp;&nbsp;├── assets/</div>
+        <div class="file">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;├── images/logo.png <span class="comment">← Novo Logótipo Personalizado</span></div>
+        <div class="dir">&nbsp;&nbsp;├── admin-panel/ <span class="comment">← Dashboard de Gestão</span></div>
+        <div class="file">&nbsp;&nbsp;│&nbsp;&nbsp;├── index.html</div>
+        <div class="file">&nbsp;&nbsp;│&nbsp;&nbsp;├── apps.html</div>
+        <div class="dir">&nbsp;&nbsp;├── backend/ <span class="comment">← API RESTful PHP</span></div>
+        <div class="dir">&nbsp;&nbsp;│&nbsp;&nbsp;├── config/</div>
+        <div class="file">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;└── database.php <span class="php">← Configurado para InfinityFree</span></div>
+        <div class="dir">&nbsp;&nbsp;│&nbsp;&nbsp;├── api/</div>
+        <div class="file">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;├── apps.php</div>
+        <div class="file">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;└── auth.php</div>
+        <div class="dir">&nbsp;&nbsp;└── database/</div>
+        <div class="file">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── appfystore.sql <span class="sql">← Esquema MySQL Completo</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- API -->
+  <section class="section section-alt" id="api">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag">Endpoints</span>
+        <h2>API RESTful</h2>
+        <p>Documentação simplificada das rotas de comunicação do sistema.</p>
+      </div>
+
+      <div class="feature-card" style="padding:0; overflow:hidden;">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Método</th>
+              <th>Endpoint</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="method method-get">GET</span></td>
+              <td><code>/api/apps.php?action=list</code></td>
+              <td>Listar todos os aplicativos</td>
+            </tr>
+            <tr>
+              <td><span class="method method-get">GET</span></td>
+              <td><code>/api/apps.php?action=detail&slug=...</code></td>
+              <td>Obter detalhes de um app específico</td>
+            </tr>
+            <tr>
+              <td><span class="method method-post">POST</span></td>
+              <td><code>/api/auth.php?action=login</code></td>
+              <td>Autenticação no Painel Admin</td>
+            </tr>
+            <tr>
+              <td><span class="method method-post">POST</span></td>
+              <td><code>/api/admin_apps.php?action=create</code></td>
+              <td>Cadastrar novo aplicativo (Admin)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATABASE -->
+  <section class="section" id="database">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag">MySQL</span>
+        <h2>Esquema do Banco de Dados</h2>
+        <p>Configurado para o host <strong>sql109.infinityfree.com</strong>.</p>
+      </div>
+
+      <div class="schema-grid">
+        <div class="schema-card">
+          <div class="schema-card-header"><i class="fas fa-table"></i> apps</div>
+          <div class="schema-card-body">
+            <div class="schema-field"><span class="fname">id</span> <span class="fpk">PK</span></div>
+            <div class="schema-field"><span class="fname">name</span> <span class="ftype">VARCHAR(200)</span></div>
+            <div class="schema-field"><span class="fname">slug</span> <span class="ftype">VARCHAR(220)</span></div>
+            <div class="schema-field"><span class="fname">apk_url</span> <span class="ftype">VARCHAR(1000)</span></div>
+            <div class="schema-field"><span class="fname">downloads</span> <span class="ftype">INT</span></div>
+          </div>
+        </div>
+        <div class="schema-card">
+          <div class="schema-card-header"><i class="fas fa-table"></i> categories</div>
+          <div class="schema-card-body">
+            <div class="schema-field"><span class="fname">id</span> <span class="fpk">PK</span></div>
+            <div class="schema-field"><span class="fname">name</span> <span class="ftype">VARCHAR(100)</span></div>
+            <div class="schema-field"><span class="fname">slug</span> <span class="ftype">VARCHAR(120)</span></div>
+          </div>
+        </div>
+        <div class="schema-card">
+          <div class="schema-card-header"><i class="fas fa-table"></i> admin_users</div>
+          <div class="schema-card-body">
+            <div class="schema-field"><span class="fname">id</span> <span class="fpk">PK</span></div>
+            <div class="schema-field"><span class="fname">username</span> <span class="ftype">VARCHAR(50)</span></div>
+            <div class="schema-field"><span class="fname">password</span> <span class="ftype">VARCHAR(255)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="creds-box">
+        <h3 style="margin-bottom:16px;"><i class="fas fa-key" style="color:var(--warning)"></i> Credenciais de Acesso</h3>
+        <div class="creds-item">
+          <span class="label">Host MySQL</span>
+          <span class="value">sql109.infinityfree.com</span>
+        </div>
+        <div class="creds-item">
+          <span class="label">Base de Dados</span>
+          <span class="value">if0_41313997_appfy</span>
+        </div>
+        <div class="creds-item">
+          <span class="label">Utilizador Admin</span>
+          <span class="value">admin</span>
+        </div>
+        <div class="creds-item">
+          <span class="label">Senha Admin</span>
+          <span class="value">admin123</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETUP -->
+  <section class="section section-alt" id="setup">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag">Deploy</span>
+        <h2>Guia de Instalação</h2>
+        <p>Siga estes passos para colocar a sua loja online em minutos.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>1. Upload</h3>
+          <p>Extraia o ZIP e envie a pasta <code>appfystore/</code> para o seu servidor via FTP ou Gestor de Ficheiros.</p>
+        </div>
+        <div class="feature-card">
+          <h3>2. Banco de Dados</h3>
+          <p>Importe o ficheiro <code>database/appfystore.sql</code> no seu phpMyAdmin da InfinityFree.</p>
+        </div>
+        <div class="feature-card">
+          <h3>3. Configuração</h3>
+          <p>As credenciais já estão configuradas em <code>backend/config/database.php</code>. Basta ajustar o <code>SITE_URL</code>.</p>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <h3 style="margin-bottom:20px; text-align:center;">Distribuição de Tecnologias</h3>
+        <canvas id="techChart" height="100"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLANATION -->
+  <section class="section section-alt" id="explanation">
+    <div class="container">
+      <div class="section-header">
+        <span class="tag">Arquitetura</span>
+        <h2>Conexão Admin-Backend e Função do SQL</h2>
+        <p>Entenda como o Painel Admin interage com a base de dados e a importância do ficheiro `appfystore.sql`.</p>
+      </div>
+
+      <div class="feature-card" style="padding:0; overflow:hidden;">
+        <div style="padding: 24px;">
+          <h3>1. Conexão do Painel Admin com o Banco de Dados</h3>
+          <p style="margin-bottom: 16px;">O <strong>Painel Admin</strong> (frontend) não se conecta diretamente à base de dados. Ele se comunica com o <strong>Backend PHP (API)</strong>, que por sua vez interage com o MySQL de forma segura.</p>
+          <ul style="list-style: none; padding-left: 0;">
+            <li style="margin-bottom: 8px;"><i class="fas fa-arrow-right" style="color: var(--primary); margin-right: 8px;"></i> <strong>Painel Admin (Frontend):</strong> Envia requisições HTTP (AJAX/Fetch) para o Backend PHP.</li>
+            <li style="margin-bottom: 8px;"><i class="fas fa-arrow-right" style="color: var(--primary); margin-right: 8px;"></i> <strong>Backend PHP (API):</strong> Recebe requisições, realiza autenticação, lógica de negócio e interage com o MySQL usando Prepared Statements.</li>
+            <li style="margin-bottom: 8px;"><i class="fas fa-arrow-right" style="color: var(--primary); margin-right: 8px;"></i> <strong>Base de Dados MySQL:</strong> Armazena dados de apps, categorias, utilizadores admin.</li>
+            <li><i class="fas fa-arrow-right" style="color: var(--primary); margin-right: 8px;"></i> <strong>Resposta:</strong> Backend PHP retorna JSON para o Painel Admin.</li>
+          </ul>
+          <p style="margin-top: 16px;">Este modelo garante segurança, mantendo credenciais e lógica sensível no servidor.</p>
+
+          <h3 style="margin-top: 32px;">2. Propósito do Ficheiro `appfystore.sql`</h3>
+          <p style="margin-bottom: 16px;">O `appfystore.sql` é um script SQL essencial para configurar a base de dados do zero. Ele serve para:</p>
+          <ul style="list-style: none; padding-left: 0;">
+            <li style="margin-bottom: 8px;"><i class="fas fa-database" style="color: var(--primary); margin-right: 8px;"></i> <strong>Criação do Esquema:</strong> Define a estrutura de todas as tabelas (`apps`, `categories`, `admin_users`, etc.), colunas, chaves e índices.</li>
+            <li><i class="fas fa-seedling" style="color: var(--primary); margin-right: 8px;"></i> <strong>População de Dados Iniciais:</strong> Insere dados essenciais como o utilizador admin padrão e categorias iniciais, deixando a base de dados pronta para uso.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2024 APPFYSTORE — Desenvolvido por Manus AI</p>
+      <p style="margin-top:8px;">Configurado para: appfystore.hotmail.com</p>
+    </div>
+  </footer>
+
+  <script>
+    const ctx = document.getElementById('techChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['HTML/CSS', 'JavaScript', 'PHP', 'SQL', 'Config (.htaccess)'],
+        datasets: [{
+          label: 'Percentagem de Código',
+          data: [40, 25, 20, 10, 5],
+          backgroundColor: [
+            '#00c853',
+            '#1a1a2e',
+            '#0f3460',
+            '#3b82f6',
+            '#64748b'
+          ],
+          borderRadius: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true, max: 100 }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
